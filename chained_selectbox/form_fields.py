@@ -3,14 +3,15 @@ from django.forms import ChoiceField
 
 
 class ChainedChoiceField(ChoiceField):
-    def __init__(self, parent_field, ajax_url, choices=None, *args, **kwargs):
+    def __init__(self, parent_field, ajax_url, item_index=None, choices=None, *args, **kwargs):
 
         self.parent_field = parent_field
         self.ajax_url = ajax_url
+        self.item_index = item_index
         self.choices = choices or (('', '--------'), )
 
         defaults = {
-            'widget': ChainedSelect(parent_field=parent_field, ajax_url=ajax_url),
+            'widget': ChainedSelect(parent_field=parent_field, ajax_url=ajax_url, item_index=item_index),
             }
         defaults.update(kwargs)
 

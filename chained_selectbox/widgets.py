@@ -15,9 +15,13 @@ class ChainedSelect(Select):
         field_three = ChainedChoiceField(parent_field='field_two', ajax_url='/chainedselectchoices')
 
     """
-    def __init__(self, parent_field=None, ajax_url=None, *args, **kwargs):
+    def __init__(self, parent_field=None, ajax_url=None, item_index=None, *args, **kwargs):
         self.parent_field = parent_field
         self.ajax_url = ajax_url
+        self.item_index = 0
+        if item_index:
+            self.item_index = item_index
+
         super(ChainedSelect, self).__init__(*args, **kwargs)
 
     class Media:
@@ -43,13 +47,13 @@ class ChainedSelect(Select):
             $(document).ready(function(){
                 var parent_field = $("#%(paretnfield_id)s");
                 parent_field.addClass('chained-parent-field');
-                parent_field.attr('chained_id', "%(chained_id)s");
+                parent_field.attr('chained_id%(item_index)d', "%(chained_id)s");
             })
         })(django.jQuery);
         //]]>
         </script>
 
-        """ % {"paretnfield_id":paretnfield_id, 'chained_id': attrs['id']}
+        """ % {"paretnfield_id":paretnfield_id, 'item_index': self.item_index, 'chained_id': attrs['id']}
 
         output += js
 
