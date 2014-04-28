@@ -13,7 +13,7 @@ setup(
     url=github_url,
     author='Josh Rowe',
     author_email='josh@s-block.com',
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['example']),
     include_package_data=True,
     license='MIT License',
     classifiers=[
