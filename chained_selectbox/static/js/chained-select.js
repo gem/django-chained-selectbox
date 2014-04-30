@@ -21,7 +21,7 @@
                 var chained_id = $(this).attr('chained_id'+idx);
                 if (chained_id.indexOf('__prefix__') != -1) {
                     chained_id = chained_id.replace('__prefix__', $(this).attr('name').split('-')[1]);
-                    $(this).attr('chained_id', chained_id);
+                    $(this).attr('chained_id'+idx, chained_id);
                 }
 
                 var valuefield = $('#' + chained_id);
