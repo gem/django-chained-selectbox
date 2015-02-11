@@ -8,7 +8,7 @@ class ChainedChoiceField(ChoiceField):
         self.parent_field = parent_field
         self.ajax_url = ajax_url
         self.item_index = item_index
-        self.choices = choices or (('', '--------'), )
+        self.choices = choices or (('', '------------'), )
 
         defaults = {
             'widget': ChainedSelect(parent_field=parent_field, ajax_url=ajax_url, item_index=item_index),

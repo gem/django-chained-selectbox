@@ -39,7 +39,6 @@ class ChainedSelect(Select):
         attrs['ajax_url'] = self.ajax_url
 
         output = super(ChainedSelect, self).render(name, value, attrs=attrs, choices=choices)
-
         js = """
         <script type="text/javascript">
         //<![CDATA[
