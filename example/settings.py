@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
+    'nested_inlines',
     'chained_selectbox',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
