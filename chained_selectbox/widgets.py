@@ -55,8 +55,8 @@ class ChainedSelect(Select):
             $(document).ready(function(){
                 var parent_field = $("#%(paretnfield_id)s");
                 parent_field.addClass('chained-parent-field');
-                parent_field.attr('chained_id%(item_index)d', \
-"%(chained_id)s");
+                parent_field.attr('chained_id%(item_index)d',
+                                  "%(chained_id)s");
             })
         })(django.jQuery);
         //]]>
