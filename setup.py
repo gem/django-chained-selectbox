@@ -26,6 +26,6 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    package_data={'chained_selectbox' : ['static/js/*.js']},
+    package_data={'chained_selectbox': ['static/js/*.js']},
 
 )

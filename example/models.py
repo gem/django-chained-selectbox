@@ -7,3 +7,6 @@ class StandardModel(models.Model):
     field_one = models.CharField(max_length=255)
     field_two = models.CharField(max_length=255)
     field_three = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return (self.name)

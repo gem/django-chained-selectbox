@@ -9,19 +9,20 @@ from django.test.client import Client
 class ChainedChoicesForm(forms.ModelForm):
     """
     Form class to be used with ChainedChoiceField and ChainedSelect widget
-    If there is already an instance (i.e. editing) then the options will be loaded when the form is built.
+    If there is already an instance (i.e. editing) then the options will be
+    loaded when the form is built.
     """
     def __init__(self, *args, **kwargs):
         super(ChainedChoicesForm, self).__init__(*args, **kwargs)
-        if kwargs.has_key('instance'):
+        if 'instance' in kwargs:
             instance = kwargs['instance']
             clie = Client()
 
             for field_name, field in self.fields.items():
                 if hasattr(field, 'parent_field'):
                     article = clie.get(field.ajax_url, {
-                        'field_name' : field_name,
-                        'parent_value' : getattr(instance, field.parent_field)
+                        'field_name': field_name,
+                        'parent_value': getattr(instance, field.parent_field)
                     })
                     field.choices = json.loads(article.content)
         elif len(args) > 0 and type(args[0]) is request.QueryDict:
@@ -31,8 +32,8 @@ class ChainedChoicesForm(forms.ModelForm):
             for field_name, field in self.fields.items():
                 if hasattr(field, 'parent_field'):
                     article = clie.get(field.ajax_url, {
-                        'field_name' : field_name,
-                        'parent_value' : instance.get(field.parent_field, None)
+                        'field_name': field_name,
+                        'parent_value': instance.get(field.parent_field, None)
                     })
                     field.choices = json.loads(article.content)
 
@@ -41,10 +42,13 @@ class ChainedChoicesForm(forms.ModelForm):
             prefix = kwargs['prefix']
             for field_name, field in self.base_fields.items():
                 if hasattr(field, 'parent_field'):
-                    self.initial[field_name] = kwargs['data'][prefix+'-'+field_name]
-                    parent_value = kwargs['data'][prefix+'-'+field.parent_field]
+                    self.initial[field_name] = (
+                        kwargs['data'][prefix+'-'+field_name])
+                    parent_value = (
+                        kwargs['data'][prefix+'-'+field.parent_field])
                     article = clie.get(field.ajax_url, {
-                            'field_name' : field_name,
-                            'parent_value' : parent_value
+                            'field_name': field_name,
+                            'parent_value': parent_value
                             })
-                    self.fields[field_name].choices = json.loads(article.content)
+                    self.fields[field_name].choices = (
+                        json.loads(article.content))

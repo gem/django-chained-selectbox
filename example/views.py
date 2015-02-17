@@ -11,12 +11,11 @@ class ChainedSelectChoices(BaseDetailView):
     """
 
     def get(self, request, *args, **kwargs):
-        field = request.GET.get('field')
         parent_value = request.GET.get("parent_value")
 
         if parent_value:
             vals_list = []
-            for x in range(1,5):
+            for x in range(1, 5):
                 vals_list.append(x*int(parent_value))
 
             choices = tuple(zip(vals_list, vals_list))
@@ -29,4 +28,3 @@ class ChainedSelectChoices(BaseDetailView):
         )
         add_never_cache_headers(response)
         return response
-
