@@ -43,9 +43,9 @@ class ChainedChoicesForm(forms.ModelForm):
             for field_name, field in self.base_fields.items():
                 if hasattr(field, 'parent_field'):
                     self.initial[field_name] = (
-                        kwargs['data'][prefix+'-'+field_name])
+                        kwargs['data'][prefix + '-' + field_name])
                     parent_value = (
-                        kwargs['data'][prefix+'-'+field.parent_field])
+                        kwargs['data'][prefix + '-' + field.parent_field])
                     article = clie.get(field.ajax_url, {
                             'field_name': field_name,
                             'parent_value': parent_value
