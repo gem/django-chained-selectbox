@@ -14,7 +14,22 @@ class ChainedChoicesForm(forms.ModelForm):
     """
     def __init__(self, *args, **kwargs):
         super(ChainedChoicesForm, self).__init__(*args, **kwargs)
-        if 'instance' in kwargs:
+        if 'data' in kwargs:
+            clie = Client()
+            prefix = kwargs['prefix']
+            for field_name, field in self.base_fields.items():
+                if hasattr(field, 'parent_field'):
+                    self.initial[field_name] = (
+                        kwargs['data'][prefix + '-' + field_name])
+                    parent_value = (
+                        kwargs['data'][prefix + '-' + field.parent_field])
+                    article = clie.get(field.ajax_url, {
+                            'field_name': field_name,
+                            'parent_value': parent_value
+                            })
+                    self.fields[field_name].choices = (
+                        json.loads(article.content))
+        elif 'instance' in kwargs:
             instance = kwargs['instance']
             clie = Client()
 
@@ -37,18 +52,3 @@ class ChainedChoicesForm(forms.ModelForm):
                     })
                     field.choices = json.loads(article.content)
 
-        elif 'data' in kwargs:
-            clie = Client()
-            prefix = kwargs['prefix']
-            for field_name, field in self.base_fields.items():
-                if hasattr(field, 'parent_field'):
-                    self.initial[field_name] = (
-                        kwargs['data'][prefix + '-' + field_name])
-                    parent_value = (
-                        kwargs['data'][prefix + '-' + field.parent_field])
-                    article = clie.get(field.ajax_url, {
-                            'field_name': field_name,
-                            'parent_value': parent_value
-                            })
-                    self.fields[field_name].choices = (
-                        json.loads(article.content))
