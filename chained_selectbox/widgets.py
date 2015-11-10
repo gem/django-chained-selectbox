@@ -1,6 +1,7 @@
 from django.forms.widgets import Select
-# from django.contrib.admin.templatetags.admin_static import static
+from django.contrib.admin.templatetags.admin_static import static
 from django.utils.safestring import mark_safe
+from django.conf import settings
 
 
 class ChainedSelect(Select):
@@ -33,8 +34,10 @@ class ChainedSelect(Select):
         super(ChainedSelect, self).__init__(*args, **kwargs)
 
     class Media:
-        js = ['admin/js/jquery.min.js', 'admin/js/jquery.init.js',
-              'js/chained-select.min.js']
+        extra = '' if settings.DEBUG else '.min'
+        js = [static('admin/js/jquery%s.js' % extra),
+              static('admin/js/jquery.init.js'),
+              static('js/chained-select.min.js')]
 
     def render(self, name, value, attrs={}, choices=()):
         field_prefix = attrs['id'][:attrs['id'].rfind('-') + 1]
