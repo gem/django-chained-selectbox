@@ -31,7 +31,7 @@
             }
         };
 
-        $('.chained-parent-field').live('change', function(e) {
+        $('.chained-parent-field').on('change', function(e) {
             $(this).loadChainedChoices();
         });
     });
