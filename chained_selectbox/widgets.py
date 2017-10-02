@@ -37,7 +37,7 @@ class ChainedSelect(Select):
         extra = '' if settings.DEBUG else '.min'
         js = [static('admin/js/jquery%s.js' % extra),
               static('admin/js/jquery.init.js'),
-              static('js/chained-select.min.js')]
+              static('js/chained-select.js')]
 
     def render(self, name, value, attrs={}, choices=()):
         field_prefix = attrs['id'][:attrs['id'].rfind('-') + 1]
@@ -60,6 +60,9 @@ class ChainedSelect(Select):
                 parent_field.addClass('chained-parent-field');
                 parent_field.attr('chained_id%(item_index)d',
                                   "%(chained_id)s");
+                parent_field.on('change', function(e) {
+                    $(this).loadChainedChoices();
+                });
             })
         })(django.jQuery);
         //]]>
