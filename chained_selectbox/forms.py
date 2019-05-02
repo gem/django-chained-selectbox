@@ -26,7 +26,7 @@ class ChainedChoicesForm(forms.ModelForm):
                     article = clie.get(field.ajax_url, {
                             'field_name': field_name,
                             'parent_value': parent_value
-                            })
+                            }, HTTP_HOST='localhost')
                     self.fields[field_name].choices = (
                         json.loads(article.content))
         elif 'instance' in kwargs:
@@ -38,7 +38,7 @@ class ChainedChoicesForm(forms.ModelForm):
                     article = clie.get(field.ajax_url, {
                         'field_name': field_name,
                         'parent_value': getattr(instance, field.parent_field)
-                    })
+                    }, HTTP_HOST='localhost')
                     field.choices = json.loads(article.content)
         elif len(args) > 0 and type(args[0]) is request.QueryDict:
             instance = args[0]
@@ -49,6 +49,5 @@ class ChainedChoicesForm(forms.ModelForm):
                     article = clie.get(field.ajax_url, {
                         'field_name': field_name,
                         'parent_value': instance.get(field.parent_field, None)
-                    })
+                    }, HTTP_HOST='localhost')
                     field.choices = json.loads(article.content)
-
