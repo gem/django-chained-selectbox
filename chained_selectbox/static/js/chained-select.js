@@ -30,10 +30,12 @@
                 $(this).loadChainedChoices_getInLoop(ajax_url, valuefield, $(this).val());
             }
         };
-
-        $('.chained-parent-field').live('change', function(e) {
-            $(this).loadChainedChoices();
-        });
+        /* This part of code is replaced in widgets.py
+           $('.chained-parent-field').on('change', function(e) {
+               console.log("sono li");
+               $(this).loadChainedChoices();
+           });
+        */
     });
 })(django.jQuery);
 
